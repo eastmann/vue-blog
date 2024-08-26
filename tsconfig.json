@@ -8,29 +8,26 @@
         "DOM",
         "DOM.Iterable"
       ],
-    "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "resolveJsonModule": true,
     "strict": true,
     "noImplicitAny": true,
     "importHelpers": true,
-    "noEmit": true,
     "outDir": "./dist",
     "sourceMap": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "skipLibCheck": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "references": [
     { "path": "./tsconfig.node.json" }
   ],
-  "paths": {
-    "@/*": [
-      "./src/*"
-    ]
-  },
   "typeRoots": [
     "./src",
     "./src/types",

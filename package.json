@@ -8,7 +8,7 @@
     "build": "vue-tsc && vite build",
     "lint": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore",
     "lint:fix": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore --fix",
-    "prepare": "cd ../ && husky ./web-dev/.husky"
+    "prepare": "husky ./.husky"
   },
   "dependencies": {
     "luxon": "3.5.0",

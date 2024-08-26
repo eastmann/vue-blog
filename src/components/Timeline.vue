@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const periods = ['Today', 'This Week', 'This Month'] as const
 
@@ -19,7 +19,7 @@ function selectPeriod(period: Period) {
       <a
         v-for="period in periods"
         :key="period"
-        :class="{ 'is-active' : period === selectedPeriod }"
+        :class="{ 'is-active': period === selectedPeriod }"
         @click="selectPeriod(period)"
       >
         {{ period }}
