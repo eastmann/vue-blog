@@ -1,26 +1,45 @@
 {
   "name": "vue-blog",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "lint": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore",
+    "lint:fix": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore --fix",
+    "prepare": "cd ../ && husky ./web-dev/.husky"
   },
   "dependencies": {
-    "@types/luxon": "^3.3.1",
-    "eslint": "^8.47.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-vue": "^9.17.0",
-    "luxon": "^3.4.1",
-    "vue": "^3.2.47"
+    "luxon": "3.5.0",
+    "pinia": "2.2.0",
+    "vue": "3.4.19"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^6.4.1",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "typescript": "^4.9.3",
-    "vite": "^4.2.0",
-    "vue-tsc": "^1.2.0"
+    "@antfu/eslint-config": "2.21.2",
+    "@types/luxon": "3.4.2",
+    "@types/node": "22.5.0",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "@vitejs/plugin-vue": "5.0.5",
+    "@vue/eslint-config-typescript": "9.1.0",
+    "eslint": "9.7.0",
+    "eslint-plugin-vue": "9.27.0",
+    "husky": "9.1.4",
+    "less": "4.2.0",
+    "lint-staged": "15.2.9",
+    "typescript": "5.5.4",
+    "vite": "5.0.13",
+    "vue-tsc": "2.0.29"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint"
+    ]
   }
 }
