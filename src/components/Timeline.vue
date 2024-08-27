@@ -7,6 +7,10 @@ import TimelineItem from './TimelineItem.vue'
 
 import type { TimelinePost } from '@/types/posts'
 import { thisMonth, thisWeek, today } from '@/types/posts'
+import { usePosts } from '@/stores/posts'
+
+// store
+const postsStore = usePosts()
 
 // constants
 const periods = ['Today', 'This Week', 'This Month'] as const
@@ -54,6 +58,10 @@ function selectPeriod(period: Period) {
 </script>
 
 <template>
+  {{ postsStore.getState().foo }}
+
+  <button @click="postsStore.updateFoo('bar')">Update</button>
+
   <nav class="is-primary panel">
     <span class="panel-tabs">
       <a
