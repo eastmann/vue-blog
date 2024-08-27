@@ -17,31 +17,33 @@
       ]
     },
     "resolveJsonModule": true,
+    "typeRoots": [
+      "./src",
+      "./src/types",
+      "./node_modules",
+      "./node_modules/@types"
+    ],
+    "types": [
+      "vite/client"
+    ],
     "strict": true,
     "noImplicitAny": true,
     "importHelpers": true,
     "outDir": "./dist",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true
   },
   "references": [
     { "path": "./tsconfig.node.json" }
-  ],
-  "typeRoots": [
-    "./src",
-    "./src/types",
-    "./node_modules",
-    "./node_modules/@types"
-  ],
-  "types": [
-    "vite/client"
   ],
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "vite-env.d.ts"
   ],
   "exclude": [
     "node_modules",
