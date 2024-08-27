@@ -1,7 +1,11 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { DateTime } from 'luxon'
-// import type { Post } from '@/types/posts'
+
+import TimelineItem from './TimelineItem.vue'
+
+import type { TimelinePost } from '@/types/posts'
 import { thisMonth, thisWeek, today } from '@/types/posts'
 
 // constants
@@ -18,17 +22,17 @@ type Period = typeof periods[number]
 const selectedPeriod = ref<Period>('Today')
 
 // computed
-const formattedPosts = computed(() => {
-  return posts.map((post) => {
+const filteredPosts = computed<TimelinePost[]>(() => {
+  // TODO: Refactor map() & filter() to single reduce()
+
+  const formatted = posts.map((post) => {
     return {
       ...post,
       created: DateTime.fromISO(post.created),
     }
   })
-})
 
-const filteredPosts = computed(() => {
-  return formattedPosts.value.filter((post) => {
+  const filtered = formatted.filter((post) => {
     if (selectedPeriod.value === 'Today') {
       return post.created >= DateTime.now().minus({ day: 1 })
     }
@@ -39,6 +43,8 @@ const filteredPosts = computed(() => {
 
     return post
   })
+
+  return filtered
 })
 
 // methods
@@ -49,7 +55,6 @@ function selectPeriod(period: Period) {
 
 <template>
   <nav class="is-primary panel">
-    {{ selectedPeriod }}
     <span class="panel-tabs">
       <a
         v-for="period in periods"
@@ -61,13 +66,10 @@ function selectPeriod(period: Period) {
       </a>
     </span>
 
-    <a
+    <TimelineItem
       v-for="post of filteredPosts"
       :key="post.id"
-      class="panel-block"
-    >
-      <a>{{ post.title }}</a>
-      <div>{{ post.created.toFormat('d MMM') }}</div>
-    </a>
+      :post="post"
+    />
   </nav>
 </template>

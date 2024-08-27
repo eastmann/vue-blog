@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import TimeLine from '@/components/TimeLine.vue'
+import Timeline from '@/components/Timeline.vue'
 </script>
 
 <template>
   <div class="section">
     <div class="container">
-      <TimeLine />
+      <Timeline />
     </div>
   </div>
 </template>
