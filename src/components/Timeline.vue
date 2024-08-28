@@ -58,7 +58,7 @@ function selectPeriod(period: Period) {
 </script>
 
 <template>
-  {{ postsStore.getState().foo }}
+  {{ postsStore.foo }}
 
   <button @click="postsStore.updateFoo('bar')">Update</button>
 
