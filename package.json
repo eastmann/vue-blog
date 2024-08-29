@@ -9,7 +9,8 @@
     "build:prod": "vite build --mode prod",
     "lint": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore",
     "lint:fix": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore --fix",
-    "prepare": "husky ./.husky"
+    "prepare": "husky ./.husky",
+    "server": "npx tsx ./src/server/index.ts"
   },
   "dependencies": {
     "luxon": "3.5.0",
@@ -18,17 +19,22 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "2.21.2",
+    "@types/cors": "2.8",
+    "@types/express": "4.17",
     "@types/luxon": "3.4.2",
     "@types/node": "22.5.0",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "@vitejs/plugin-vue": "5.0.5",
     "@vue/eslint-config-typescript": "9.1.0",
+    "cors": "2.8",
     "eslint": "9.7.0",
     "eslint-plugin-vue": "9.27.0",
+    "express": "4.17",
     "husky": "9.1.4",
     "less": "4.2.0",
     "lint-staged": "15.2.9",
+    "tsx": "^4.19.0",
     "typescript": "5.5.4",
     "vite": "5.0.13",
     "vue-tsc": "2.0.29"
