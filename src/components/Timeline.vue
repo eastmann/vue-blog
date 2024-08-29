@@ -6,19 +6,13 @@ import { DateTime } from 'luxon'
 import TimelineItem from './TimelineItem.vue'
 
 import type { TimelinePost } from '@/types/posts'
-import { thisMonth, thisWeek, today } from '@/types/posts'
-import { usePosts } from '@/stores/posts'
+import { usePosts } from '@/stores/postsStore'
 
 // store
 const postsStore = usePosts()
 
 // constants
 const periods = ['Today', 'This Week', 'This Month'] as const
-const posts = [
-  today,
-  thisWeek,
-  thisMonth,
-]
 
 type Period = typeof periods[number]
 
@@ -29,7 +23,13 @@ const selectedPeriod = ref<Period>('Today')
 const filteredPosts = computed<TimelinePost[]>(() => {
   // TODO: Refactor map() & filter() to single reduce()
 
-  const formatted = posts.map((post) => {
+  const formatted = postsStore.ids.map((id) => {
+    const post = postsStore.all.get(id)
+
+    if (!post) {
+      throw new Error(`Post with id of ${id} was expected, but not found`)
+    }
+
     return {
       ...post,
       created: DateTime.fromISO(post.created),
@@ -58,10 +58,6 @@ function selectPeriod(period: Period) {
 </script>
 
 <template>
-  {{ postsStore.foo }}
-
-  <button @click="postsStore.updateFoo('bar')">Update</button>
-
   <nav class="is-primary panel">
     <span class="panel-tabs">
       <a
