@@ -10,7 +10,7 @@
     "lint": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore",
     "lint:fix": "eslint src --ext .vue,.js,.ts --ignore-path .gitignore --fix",
     "prepare": "husky ./.husky",
-    "server": "npx tsx ./src/server/index.ts"
+    "server": "tsx ./src/server/index.ts"
   },
   "dependencies": {
     "luxon": "3.5.0",
