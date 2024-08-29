@@ -1,8 +1,10 @@
-import { ref } from 'vue'
+import { DateTime } from 'luxon'
+import { computed, ref } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { Post } from '@/types/posts'
 import { thisMonth, thisWeek, today } from '@/types/posts'
+import type { Post, TimelinePost } from '@/types/posts'
+import type { Period } from '@/types/constants'
 
 /**
  * Choosing data structure for our Posts:
@@ -27,11 +29,53 @@ export const usePosts = defineStore('posts', () => {
     ]),
   ) // { 1: { title: 'foo', created: '2022-01-01' } }
 
+  const selectedPeriod = ref<Period>('Today')
+
   // actions
+  function setSelectPeriod(period: Period) {
+    selectedPeriod.value = period
+  }
+
+  // computed
+  const filteredPosts = computed<TimelinePost[]>(() => {
+    // TODO: Refactor map() & filter() to single reduce()
+
+    const formatted = ids.value.map((id) => {
+      const post = all.value.get(id)
+
+      if (!post) {
+        throw new Error(`Post with id of ${id} was expected, but not found`)
+      }
+
+      return {
+        ...post,
+        created: DateTime.fromISO(post.created),
+      }
+    })
+
+    const filtered = formatted.filter((post) => {
+      if (selectedPeriod.value === 'Today') {
+        return post.created >= DateTime.now().minus({ day: 1 })
+      }
+
+      if (selectedPeriod.value === 'This Week') {
+        return post.created >= DateTime.now().minus({ week: 1 })
+      }
+
+      return post
+    })
+
+    return filtered
+  })
 
   return {
     ids,
     all,
+
+    selectedPeriod,
+    setSelectPeriod,
+
+    filteredPosts,
   }
 })
 
