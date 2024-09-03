@@ -11,14 +11,27 @@ const props = defineProps<ProsType>()
 
 // data
 const title = ref(props.post.title)
-
+const content = ref(props.post.markdown)
 // DOM
 const contentEditable = ref<HTMLDivElement>()
 
 // hooks
 onMounted(() => {
-  console.log('*** mounted ***', contentEditable.value?.innerHTML)
+  if (!contentEditable.value) {
+    throw new Error('contentEditable Node was not found')
+  }
+
+  contentEditable.value.textContent = content.value
 })
+
+// methods
+function handleInput() {
+  if (!contentEditable.value) {
+    throw new Error('contentEditable Node was not found')
+  }
+
+  content.value = contentEditable.value.textContent ?? 'No content provided!'
+}
 </script>
 
 <template>
@@ -33,9 +46,14 @@ onMounted(() => {
             class="input"
           >
         </div>
-        <div ref="contentEditable" contenteditable>
-          This is the content
-        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div ref="contentEditable" contenteditable @input="handleInput" />
+      </div>
+      <div class="column">
+        {{ content }}
       </div>
     </div>
   </div>
