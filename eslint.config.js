@@ -33,6 +33,7 @@ export default antfu(
           prev: ['const', 'let'],
           next: ['const', 'let'],
         }],
+        'unicorn/prefer-dom-node-text-content': ['off'],
       },
     },
 
