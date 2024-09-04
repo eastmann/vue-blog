@@ -1,19 +1,47 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { marked } from 'marked'
+
 import type { TimelinePost } from '@/types/posts'
 
-// props
+// types
 interface ProsType {
   post: TimelinePost
 }
 
+// props
 const props = defineProps<ProsType>()
 
 // data
+const html = ref('')
 const title = ref(props.post.title)
 const content = ref(props.post.markdown)
+
 // DOM
 const contentEditable = ref<HTMLDivElement>()
+
+// watch
+
+// - More concise, but less explicit;
+// - Has { immediate: true } by default;
+// - Need to figure out what to watch (where ref is);
+// ==================================================
+// watchEffect(() => {
+//   html.value = marked.parse(content.value).toString()
+// })
+
+// - Code is more readable;
+// - More explicit on what to watch, than "watchEffect";
+// =========================================================
+watch(
+  content,
+  (newContent) => {
+    html.value = marked.parse(newContent).toString()
+  },
+  {
+    immediate: true,
+  },
+)
 
 // hooks
 onMounted(() => {
@@ -53,7 +81,7 @@ function handleInput() {
         <div ref="contentEditable" contenteditable @input="handleInput" />
       </div>
       <div class="column">
-        {{ content }}
+        <div v-html="html" />
       </div>
     </div>
   </div>
