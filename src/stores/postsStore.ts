@@ -30,13 +30,15 @@ export const usePosts = defineStore('posts', () => {
 
   const selectedPeriod = ref<Period>('Today')
 
-  // actions
+  // actions (in 3 steps):
   async function fetchPosts() {
+    // 1. Fetching data
     const res = await window.fetch('http://localhost:8000/posts')
     const data = (await res.json()) as Post[]
 
     await delay() // imitate network latency
 
+    // 2. Processing data
     const fetch_ids: string[] = []
     const fetch_all = new Map<string, Post>()
 
@@ -45,6 +47,7 @@ export const usePosts = defineStore('posts', () => {
       fetch_all.set(post.id, post)
     }
 
+    // 3. Mutating data (updating State)
     ids.value = fetch_ids
     all.value = fetch_all
   }
